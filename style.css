@@ -1,0 +1,122 @@
+:root {
+    --neon-blue: #00d4ff;
+    --dark-bg: #020b1a;
+    --glass: rgba(0, 15, 40, 0.7);
+    --neon-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+}
+
+body {
+    background-color: var(--dark-bg);
+    background-image: 
+        radial-gradient(circle at 10% 20%, #001f3f 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, #000814 0%, transparent 40%);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Buscador */
+.search-box {
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+}
+
+.input-group {
+    background: var(--glass);
+    border: 1px solid var(--neon-blue);
+    border-radius: 50px;
+    padding: 5px 15px;
+    box-shadow: var(--neon-shadow);
+    backdrop-filter: blur(10px);
+}
+
+.form-control, .input-group-text, .btn {
+    background: transparent !important;
+    border: none !important;
+    color: white !important;
+    box-shadow: none !important;
+}
+
+/* Lista de Predicciones (Sugerencias) */
+#suggestions {
+    position: absolute;
+    width: 100%;
+    top: 110%;
+    background: rgba(2, 11, 26, 0.95);
+    border: 1px solid var(--neon-blue);
+    border-radius: 15px;
+    z-index: 1000;
+    overflow: hidden;
+    box-shadow: var(--neon-shadow);
+}
+
+.suggestion-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+    transition: 0.3s;
+    list-style: none;
+}
+
+.suggestion-item:hover {
+    background: rgba(0, 212, 255, 0.2);
+    color: var(--neon-blue);
+}
+
+/* Tarjeta Principal */
+.temp-display {
+    font-size: 5rem;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 20px var(--neon-blue);
+    margin: 0;
+}
+
+#cityName {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+}
+
+/* Tarjetas de Datos */
+.data-card {
+    background: var(--glass);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    transition: 0.4s;
+    backdrop-filter: blur(5px);
+}
+
+.data-card:hover {
+    border-color: var(--neon-blue);
+    box-shadow: var(--neon-shadow);
+    transform: translateY(-8px);
+}
+
+.data-card i {
+    font-size: 2rem;
+    color: var(--neon-blue);
+    filter: drop-shadow(0 0 5px var(--neon-blue));
+}
+
+.data-card span {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+}
+
+/* Animaciones */
+.weather-card-container {
+    animation: zoomIn 0.6s ease-out;
+    width: 100%;
+    max-width: 900px;
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
