@@ -31,16 +31,27 @@ cityInput.addEventListener('input', async () => {
     }
 });
 
+// --- FUNCIÓN CORREGIDA ---
 function showSuggestions(cities) {
     suggestionsList.innerHTML = '';
     cities.forEach(city => {
         const li = document.createElement('li');
         li.className = 'suggestion-item';
-        li.textContent = `${city.name}, ${city.region} (${city.country})`;
-        li.addEventListener('click', () => {
-            cityInput.value = city.name;
-            suggestionsList.innerHTML = '';
-            getWeatherData(city.name);
+        
+        // Creamos una cadena única para que la API no se confunda
+        // Ejemplo: "Madrid, Madrid, Spain"
+        const fullLocation = `${city.name}, ${city.region}, ${city.country}`;
+        
+        li.textContent = fullLocation;
+
+        li.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que otros eventos interfieran
+            
+            cityInput.value = city.name; // El usuario ve el nombre corto
+            suggestionsList.innerHTML = ''; // Limpiamos la lista
+            
+            // Enviamos la localización completa a la búsqueda de clima
+            getWeatherData(fullLocation); 
         });
         suggestionsList.appendChild(li);
     });
@@ -71,7 +82,8 @@ clearBtn.addEventListener('click', () => {
 });
 
 async function getWeatherData(city) {
-    const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&lang=es`;
+    // La variable 'city' aquí ya trae el nombre, región y país si viene de un clic
+    const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}&lang=es`;
 
     try {
         statusMessage.innerHTML = `<div class="spinner-border text-info" role="status"></div>`;
@@ -117,9 +129,12 @@ function showError(msg) {
     statusMessage.innerHTML = `<p class="text-danger">⚠️ ${msg}</p>`;
 }
 
-// Cerrar sugerencias si se hace clic fuera del buscador
+// --- LOGICA DE CIERRE CORREGIDA ---
 document.addEventListener('click', (e) => {
-    if (!cityInput.contains(e.target)) {
+    // Si el clic NO fue dentro de la caja de búsqueda, cerramos las sugerencias
+    const isClickInside = document.querySelector('.search-box').contains(e.target);
+    
+    if (!isClickInside) {
         suggestionsList.innerHTML = '';
     }
 });
